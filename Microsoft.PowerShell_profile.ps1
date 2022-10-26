@@ -22,6 +22,15 @@ function commit {
   git commit -m $CommitMessage
 }
 
+function feat {
+  [CmdletBinding()]
+  param (
+    [Parameter(Mandatory, Position = 0)]
+    [string[]]$CommitMessage
+  ) 
+  git commit -m "feat: $CommitMessage"
+}
+
 function test-ci { git add * ; git commit --amend -m "ci: updating pipeline" ; git push origin -f }
 
 
