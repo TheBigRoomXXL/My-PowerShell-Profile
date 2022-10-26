@@ -17,7 +17,7 @@ function commit {
   [CmdletBinding()]
   param (
     [Parameter(Mandatory, Position = 0)]
-    [string[]]$CommitMessage
+    [string]$CommitMessage
   ) 
   git commit -m $CommitMessage
 }
@@ -26,7 +26,7 @@ function feat {
   [CmdletBinding()]
   param (
     [Parameter(Mandatory, Position = 0)]
-    [string[]]$CommitMessage
+    [string]$CommitMessage
   ) 
   git commit -m "feat: $CommitMessage"
 }
@@ -35,10 +35,24 @@ function fix {
   [CmdletBinding()]
   param (
     [Parameter(Mandatory, Position = 0)]
-    [string[]]$CommitMessage
+    [string]$CommitMessage
   ) 
   git commit -m "fix: $CommitMessage"
 }
+
+function amend {
+  [CmdletBinding()]
+  param (
+    [Parameter()]
+    [string]$m
+  ) 
+  if ($PSBoundParameters.ContainsKey('m')) {
+    git commit --amend -m $m
+  } else {
+      git commit --amend --no-edit
+  }
+}
+New-Alias -Name ammend -Value amend
 
 function test-ci { git add * ; git commit --amend -m "ci: updating pipeline" ; git push origin -f }
 
